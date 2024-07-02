@@ -1,5 +1,4 @@
 
-import { Banner } from './Banner'
 
 import FavoriteBook from './FavoriteBook'
 
@@ -10,15 +9,15 @@ import PromoBanner from './PromoBanner'
 import { useLoaderData } from 'react-router-dom'
 import CategoryCard from './CategoryCard'
 import Video from './Vedio'
-import MY from './MY.JSX'
+import BannerCard from './BannerCard'
+
 
 export const Home = () => {
   const categories = useLoaderData();
   const uniqueCategories = Array.from(new Set(categories.map(category => category.category)));
   return (
     <div>
-      <Banner/>
-   
+<BannerCard></BannerCard>
 
       
  <h2 className="text-4xl my-12 font-bold text-center">Books Category</h2>

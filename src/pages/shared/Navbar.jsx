@@ -1,128 +1,146 @@
 import { useContext, useEffect, useState } from "react";
-
-// import icons from react icons
-import {  FaMap } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import sun from "./light.png";
-import moon from "./dark.png";
+import { motion } from "framer-motion";
+import { FaMap, FaBars, FaTimes } from "react-icons/fa";
+import { FaSun, FaMoon } from "react-icons/fa";
 import { AuthContext } from "../../contexts/AuthProvider";
-//import Logout from "../Logout";
-
-
-
 
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
+  );
 
-        
-const {user,logOut}=useContext(AuthContext)
-console.log(user)
-   
-    const [isSticky, setIsSticky] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    const [theme, setTheme] = useState(
-        localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
-      );
-         // update state on toggle
-    const handleToggle = (e) => {
-        if (e.target.checked) {
-          setTheme("dark");
-        } else {
-          setTheme("light");
-        }
-      };
-    
-      // set theme state in localstorage on mount & also update localstorage on state change
-      useEffect(() => {
-        localStorage.setItem("theme", theme);
-        const localTheme = localStorage.getItem("theme");
-        // add custom data-theme attribute to html tag required to update theme using DaisyUI
-        document.querySelector("html").setAttribute("data-theme", localTheme);
-      }, [theme]);
-  
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+    document.querySelector("html").setAttribute("data-theme", theme);
+  }, [theme]);
+
+  const handleToggle = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
+
+  const handleLogout = () => {
+    logOut().then();
+  };
+
+  const navItems = [
+    { link: "Home", path: "/" },
+    { link: "All", path: "/all-book" },
+    { link: "Donate", path: "/donate" },
+    { link: "Borrow Book", path: "/borrow" },
+    { link: "Donation Book", path: "/add-book" },
+    { link: "Dashboard", path: "/admin/dashboard" },
+    { link: "Login", path: "/login" },
+  ];
+
+  return (
+    <motion.nav
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className={`fixed w-full z-50 transition-all duration-300 ${
+        isScrolled ? "bg-white shadow-md dark:bg-gray-800" : "bg-transparent"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <Link to="/" className="flex items-center space-x-2">
+            <FaMap className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+            <span className="text-2xl font-bold text-purple-600 dark:text-purple-400">Boi Bazar</span>
+          </Link>
+
+          <div className="hidden md:flex items-center space-x-4">
+            {navItems.map((item) => (
+              <Link
+                key={item.link}
+                to={item.path}
+                className="text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"
+              >
+                {item.link}
+              </Link>
+            ))}
+            
+            {user && (
+              <button
+                onClick={handleLogout}
+                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
+              >
+                Logout
+              </button>
+            )}
+            
+            <button
+              onClick={handleToggle}
+              className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
+            >
+              {theme === "light" ? <FaMoon /> : <FaSun />}
+            </button>
+          </div>
+
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={handleToggle}
+              className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 mr-2"
+            >
+              {theme === "light" ? <FaMoon /> : <FaSun />}
+            </button>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 focus:outline-none"
+            >
+              {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      <motion.div
+        initial={{ opacity: 0, height: 0 }}
+        animate={{ opacity: isOpen ? 1 : 0, height: isOpen ? "auto" : 0 }}
+        transition={{ duration: 0.3 }}
+        className="md:hidden"
+      >
+        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-gray-800 shadow-lg">
+          {navItems.map((item) => (
+            <Link
+              key={item.link}
+              to={item.path}
+              className="text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 block px-3 py-2 rounded-md text-base font-medium"
+              onClick={() => setIsOpen(false)}
+            >
+              {item.link}
+            </Link>
+          ))}
+          {user && (
+            <button
+              onClick={handleLogout}
+              className="w-full text-left bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300 mt-2"
+            >
+              Logout
+            </button>
+          )}
+        </div>
+      </motion.div>
       
-
-    const handlelogout=()=>{
-        logOut().then()
-      }
-
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 100) {
-                setIsSticky(true);
-            }
-            else {
-                setIsSticky(false);
-            }
-        };
-
-        window.addEventListener("scroll", handleScroll);
-
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
-
-    const navItems = [
-        { link: "Home", path: "/" },
-        
-        { link: "All", path: "/all-book" },
-        { link: "Donate", path: "/donate" },
-        { link: "Borrow Book", path: "/borrow" },
-        { link: "Donation Book", path: "/add-book " },
-        { link: "Dashbord", path: "/admin/dashboard" },
-        { link: "Login", path: "/login" },
-    ];
-    return (
-        <header className="w-full bg-transparent fixed top-0 left-0 right-0 transition-all ease-in duration-300">
-            <nav className={`py-4 lg:px-4 px-4 ${isSticky ? "sticky top-0 left-0 right-0 bg-teal-300" : ""
-                }`}>
-                <div className="flex justify-between items-center text-base gap-2">
-                    <Link to="/" className="text-3xl font-bold text-purple-500  flex items-center "><FaMap className="inline-block"/>বই বাজার</Link>
-
-                    <button className="btn btn-square btn-ghost">
-          <label className="swap swap-rotate w-12 h-12">
-            <input
-              type="checkbox"
-              onChange={handleToggle}
-              // show toggle image based on localstorage theme
-              checked={theme === "light" ? false : true}
-            />
-            {/* light theme sun image */}
-            <img src={sun} alt="light" className="w-8 h-8 swap-on" />
-            {/* dark theme moon image */}
-            <img src={moon} alt="dark" className="w-8 h-8 swap-off" />
-          </label>
-        </button>
-                    <ul className="md:flex space-x-2 hidden navitems  ">
-
-                        {
-                            navItems.map(({ link, path }) => <Link key={link} to={path}  className="link block font-bold  text-sm  cursor-pointer uppercase text-black hover:text-blue-700">
-                                {link}
-                            </Link>)
-                        }
-                    </ul>
-                    { 
-        user &&(
-          <button onClick={handlelogout} className="btn btn-success">logout</button>
-        )
-      }
-  
-  <p>{user?.email}</p>
-
- 
-        
-                </div>
-
-                
-                    
- 
-
-
-        
-                
-            </nav>
-        </header>
-    );
+      {/* {user && (
+        <div className="absolute bottom-0 right-0 mb-4 mr-4 bg-white dark:bg-gray-800 p-2 rounded shadow-md">
+          <p className="text-sm text-gray-600 dark:text-gray-300">{user.email}</p>
+        </div>
+      )} */}
+    </motion.nav>
+  );
 };
 
 export default Navbar;
