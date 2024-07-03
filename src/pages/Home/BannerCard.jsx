@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { motion } from 'framer-motion';
 import Lottie from 'react-lottie';
 import { FaSearch, FaBook, FaUserFriends, FaCalendarAlt } from 'react-icons/fa';
@@ -92,7 +92,7 @@ const BannerCard= () => {
             {/* <div className="absolute inset-0 bg-gradient-to-r from-blue-300 to-indigo-300 opacity-30 rounded-full blur-2xl">
                 
             </div> */}
-            <Lottie options={lottieOptions} height={350} width={500} />
+            <Lottie options={lottieOptions} height={300} width={400} />
           </motion.div>
         </div>
       </div>

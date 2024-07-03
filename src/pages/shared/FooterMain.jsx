@@ -1,31 +1,70 @@
-
-
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 
 const FooterMain = () => {
   return (
-    <div>
-            <footer className="footer footer-center p-10 bg-teal-300 text-base-content rounded">
-  <nav className="grid grid-flow-col gap-4">
-    <a className="link link-hover">About us</a> 
-    <a className="link link-hover">Contact</a> 
-    <a className="link link-hover">Jobs</a> 
-    <a className="link link-hover">Press kit</a>
-  </nav> 
-  <nav>
-    <div className="grid grid-flow-col gap-4">
-      <a><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="fill-current"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg></a> 
-      <a><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="fill-current"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path></svg></a> 
-      <a><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="fill-current"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path></svg></a>
-    </div>
-  </nav> 
-  <aside>
-    <p>Copyright © 2023 - All right reserved by Rahatutzaman Rizon
-    </p>
-    <p>email: bookbazar23@gmail.com</p>
-  </aside>
-</footer>
+    <footer className="bg-gray-900 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Company Info */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">About Us</h3>
+            <p className="text-gray-400 mb-4">
+              We are dedicated to providing innovative library management and book donation solutions to empower communities and foster a love for reading.
+            </p>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <ul className="space-y-2">
+              <li><Link to="/" className="text-gray-400 hover:text-white transition-colors">Home</Link></li>
+              <li><Link to="/about" className="text-gray-400 hover:text-white transition-colors">About Us</Link></li>
+              <li><Link to="/services" className="text-gray-400 hover:text-white transition-colors">Services</Link></li>
+              <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors">Contact</Link></li>
+            </ul>
+          </div>
+
+          {/* Services */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Our Services</h3>
+            <ul className="space-y-2">
+              <li><Link to="/library-management" className="text-gray-400 hover:text-white transition-colors">Library Management</Link></li>
+              <li><Link to="/book-donations" className="text-gray-400 hover:text-white transition-colors">Book Donations</Link></li>
+              <li><Link to="/community-programs" className="text-gray-400 hover:text-white transition-colors">Community Programs</Link></li>
+              <li><Link to="/resources" className="text-gray-400 hover:text-white transition-colors">Educational Resources</Link></li>
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
+            <p className="text-gray-400 mb-2">123 Library Street, Booktown</p>
+            <p className="text-gray-400 mb-2">Phone: (123) 456-7890</p>
+            <p className="text-gray-400 mb-4">Email: info@librarymanagement.com</p>
+            <div className="flex space-x-4">
+              <a href="#" className="text-gray-400 hover:text-white transition-colors"><FaFacebookF /></a>
+              <a href="#" className="text-gray-400 hover:text-white transition-colors"><FaTwitter /></a>
+              <a href="#" className="text-gray-400 hover:text-white transition-colors"><FaInstagram /></a>
+              <a href="#" className="text-gray-400 hover:text-white transition-colors"><FaLinkedinIn /></a>
+            </div>
+          </div>
         </div>
-  )
-}
+
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-gray-400 text-sm">
+            © 2024 Library Management System. All rights reserved.
+          </p>
+          <div className="mt-4 md:mt-0">
+            <Link to="/privacy-policy" className="text-gray-400 hover:text-white transition-colors text-sm mr-4">Privacy Policy</Link>
+            <Link to="/terms-of-service" className="text-gray-400 hover:text-white transition-colors text-sm">Terms of Service</Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
 
 export default FooterMain;

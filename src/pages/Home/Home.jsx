@@ -8,8 +8,16 @@ import PromoBanner from './PromoBanner'
 
 import { useLoaderData } from 'react-router-dom'
 import CategoryCard from './CategoryCard'
-import Video from './Vedio'
+
 import BannerCard from './BannerCard'
+import LibraryStatistics from '../front-page/LibraryStatistics'
+import NewsletterSubscription from '../front-page/NewsletterSubscription'
+import FAQ from '../front-page/FAQ'
+import UpcomingEvents from '../front-page/UpcomingEvents'
+import ReadingRecommendations from '../front-page/Recomend'
+import OnlineCatalog from '../front-page/Online'
+import AboutPage from '../about/About'
+
 
 
 export const Home = () => {
@@ -32,12 +40,19 @@ export const Home = () => {
 </div>
 
 
-<Video></Video>
-      
-      
-      <FavoriteBook/>
-      <PromoBanner/>
+
+      <LibraryStatistics>
+
+      </LibraryStatistics>
+      <NewsletterSubscription></NewsletterSubscription>
+      <FAQ></FAQ>
+      <UpcomingEvents></UpcomingEvents>
+      <AboutPage></AboutPage>
+      {/* <Testimonials></Testimonials>
+       */}
     
+   
+  
      
     </div>
   )
